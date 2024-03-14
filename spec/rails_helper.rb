@@ -67,17 +67,8 @@ RSpec.configure do |config|
 end
 
 module AuthHelper
-  def sign_in_user(user)
-    sign_in user
-  end
-
-  def sign_out_user
-    sign_out :user
-  end
-
   def auth_headers(user)
-    sign_in_user(user)
+    sign_in user
     { 'Authorization' => "Bearer #{user.jti}" }
   end
 end
-

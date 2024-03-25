@@ -5,7 +5,7 @@ class Ability
     can :read, [Post, Comment, Like]
 
     return unless user.present?
-    can :profile, User, id: user.id
+    can :show, User, id: user.id
     can :add_image, User, id: user.id
     can :create, [Comment, Like]
 

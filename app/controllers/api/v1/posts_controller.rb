@@ -1,5 +1,5 @@
 class Api::V1::PostsController < ApplicationController
-  load_and_authorize_resource
+  before_action :authenticate_user!, only: [:create, :update, :destroy]
   before_action :set_post, only: [:show, :update, :destroy]
   
   def index
@@ -12,6 +12,7 @@ class Api::V1::PostsController < ApplicationController
   end
 
   def create
+    authorize! :create, Post
     if current_user.admin?
       @post = current_user.posts.new(post_params)
 
@@ -26,6 +27,7 @@ class Api::V1::PostsController < ApplicationController
   end
 
   def update
+    authorize! :update, Post
     if current_user.admin?
       if @post.update(post_params)
         render json: { message: "Post updated successfully" }
@@ -38,6 +40,7 @@ class Api::V1::PostsController < ApplicationController
   end
 
   def destroy
+    authorize! :destroy, Post
     if current_user.admin?
       @post.destroy
       render json: { message: "Post deleted successfully" }

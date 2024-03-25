@@ -1,7 +1,8 @@
 class Api::V1::UsersController < ApplicationController
+  before_action :authenticate_user!
   load_and_authorize_resource
 
-  def profile
+  def show
     @user_info = {
       id: current_user.id,
       name: current_user.name,
